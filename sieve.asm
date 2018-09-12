@@ -61,7 +61,7 @@ sieve:
 
         enter  0,0               ; setup routine
         pusha
-	mov 	edi, array	; point data index to array.
+	mov 	edx, array	; point edx to array.
 	CLD			; DF = 0, String instr inc.
 	mov	eax, prime	; eax = i**2
 	mul	eax
@@ -70,10 +70,12 @@ sieve:
 ;--------------------------------------------------------
 	
 do_while:
-	lea edx, [edi+4*ebx]	; edx =  *(&array + j)
-	mov dword [edx], 0	; array[j] = 0	
-	cmp eax, range		
-	jne do_while		; break if j > range
+sbreak:
+	add	edx, eax		; 
+	mov 	dword [edx], 0		; array[j] = 0	
+	add	eax, prime
+	cmp 	eax, range		
+	jg	do_while		; break if j > range
 	
 	
 ;--------------------------------------------------------
